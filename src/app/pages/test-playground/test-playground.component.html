@@ -1,0 +1,441 @@
+<div class="test-playground" [attr.data-testid]="testIds.CONTAINER">
+  <!-- Header -->
+  <header class="playground-header">
+    <h1 [attr.data-testid]="testIds.HEADING">Test Playground</h1>
+    <p [attr.data-testid]="testIds.PARAGRAPH">
+      This is a comprehensive testing page containing all major Angular component types and UI elements.
+      Each element has a unique data-testid for automated testing purposes.
+    </p>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="nav-section card" [attr.data-testid]="testIds.NAV_MENU">
+    <h2>Navigation</h2>
+    <div class="nav-links">
+      <a [attr.data-testid]="testIds.NAV_ITEM_HOME" routerLink="/page-one">Home</a>
+      <a [attr.data-testid]="testIds.NAV_ITEM_ABOUT" routerLink="/page-two">About</a>
+      <a [attr.data-testid]="testIds.NAV_ITEM_CONTACT" routerLink="/page-three">Contact</a>
+    </div>
+    <div class="breadcrumb" [attr.data-testid]="testIds.BREADCRUMB">
+      <span>Home</span> / <span>Test</span> / <span>Playground</span>
+    </div>
+  </nav>
+
+  <!-- Feedback Elements -->
+  <section class="feedback-section card">
+    <h2>Feedback Elements</h2>
+    
+    <div class="alert" *ngIf="showAlert" [attr.data-testid]="testIds.ALERT">
+      <span>⚠️ This is an alert message</span>
+      <button (click)="closeAlert()" class="close-btn">×</button>
+    </div>
+
+    <button [attr.data-testid]="testIds.TOAST_TRIGGER" (click)="showToast()" class="btn btn-secondary">
+      Show Toast
+    </button>
+
+    <div class="loading-demo">
+      <button (click)="toggleLoading()" class="btn btn-secondary">Toggle Loading</button>
+      <div *ngIf="showLoading" [attr.data-testid]="testIds.LOADING_SPINNER" class="spinner"></div>
+    </div>
+
+    <div class="progress-demo">
+      <label>Progress Bar:</label>
+      <div class="progress-bar" [attr.data-testid]="testIds.PROGRESS_BAR">
+        <div class="progress-fill" [style.width.%]="progressValue">{{progressValue}}%</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- State Management -->
+  <section class="state-section card">
+    <h2>State Management</h2>
+    
+    <div class="counter">
+      <h3>Counter</h3>
+      <div class="counter-controls">
+        <button [attr.data-testid]="testIds.BUTTON_DECREMENT" (click)="decrement()" class="btn btn-secondary">-</button>
+        <span [attr.data-testid]="testIds.COUNTER_VALUE" class="counter-value">{{ counter }}</span>
+        <button [attr.data-testid]="testIds.BUTTON_INCREMENT" (click)="increment()" class="btn btn-secondary">+</button>
+      </div>
+    </div>
+
+    <div class="toggle">
+      <h3>Toggle Content</h3>
+      <button [attr.data-testid]="testIds.TOGGLE_BUTTON" (click)="toggle()" class="btn btn-secondary">
+        {{ isToggled ? 'Hide' : 'Show' }} Content
+      </button>
+      <div *ngIf="isToggled" [attr.data-testid]="testIds.TOGGLE_CONTENT" class="toggle-content">
+        This content is toggled!
+      </div>
+    </div>
+  </section>
+
+  <!-- Form Controls -->
+  <section class="form-section card">
+    <h2>Form Controls</h2>
+    <form [formGroup]="testForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="textInput">Text Input:</label>
+        <input
+          id="textInput"
+          type="text"
+          [attr.data-testid]="testIds.INPUT_TEXT"
+          formControlName="textInput"
+          placeholder="Enter text"
+        />
+        <div *ngIf="formSubmitted && testForm.get('textInput')?.invalid" [attr.data-testid]="testIds.FORM_ERROR" class="error">
+          Text is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="emailInput">Email Input:</label>
+        <input
+          id="emailInput"
+          type="email"
+          [attr.data-testid]="testIds.INPUT_EMAIL"
+          formControlName="emailInput"
+          placeholder="Enter email"
+        />
+        <div *ngIf="formSubmitted && testForm.get('emailInput')?.invalid" class="error">
+          Valid email is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="passwordInput">Password Input:</label>
+        <input
+          id="passwordInput"
+          type="password"
+          [attr.data-testid]="testIds.INPUT_PASSWORD"
+          formControlName="passwordInput"
+          placeholder="Enter password"
+        />
+        <div *ngIf="formSubmitted && testForm.get('passwordInput')?.invalid" class="error">
+          Password must be at least 6 characters
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="numberInput">Number Input:</label>
+        <input
+          id="numberInput"
+          type="number"
+          [attr.data-testid]="testIds.INPUT_NUMBER"
+          formControlName="numberInput"
+          placeholder="Enter number"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="textarea">Textarea:</label>
+        <textarea
+          id="textarea"
+          [attr.data-testid]="testIds.TEXTAREA"
+          formControlName="textarea"
+          rows="4"
+          placeholder="Enter long text"
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <input
+            type="checkbox"
+            [attr.data-testid]="testIds.CHECKBOX"
+            formControlName="checkbox"
+          />
+          Checkbox
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>Radio Buttons:</label>
+        <div class="radio-group">
+          <label>
+            <input
+              type="radio"
+              [attr.data-testid]="testIds.RADIO_OPTION_1"
+              formControlName="radio"
+              value="option1"
+            />
+            Option 1
+          </label>
+          <label>
+            <input
+              type="radio"
+              [attr.data-testid]="testIds.RADIO_OPTION_2"
+              formControlName="radio"
+              value="option2"
+            />
+            Option 2
+          </label>
+          <label>
+            <input
+              type="radio"
+              [attr.data-testid]="testIds.RADIO_OPTION_3"
+              formControlName="radio"
+              value="option3"
+            />
+            Option 3
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="dropdown">Select/Dropdown:</label>
+        <select
+          id="dropdown"
+          [attr.data-testid]="testIds.SELECT_DROPDOWN"
+          formControlName="dropdown"
+        >
+          <option value="">Choose an option</option>
+          <option value="option1">Option 1</option>
+          <option value="option2">Option 2</option>
+          <option value="option3">Option 3</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="datePicker">Date Picker:</label>
+        <input
+          id="datePicker"
+          type="date"
+          [attr.data-testid]="testIds.DATE_PICKER"
+          formControlName="datePicker"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="fileUpload">File Upload:</label>
+        <input
+          id="fileUpload"
+          type="file"
+          [attr.data-testid]="testIds.FILE_UPLOAD"
+          (change)="onFileSelected($event)"
+        />
+      </div>
+
+      <button type="submit" [attr.data-testid]="testIds.FORM_SUBMIT" class="btn btn-primary">
+        Submit Form
+      </button>
+    </form>
+  </section>
+
+  <!-- Buttons -->
+  <section class="buttons-section card">
+    <h2>Buttons</h2>
+    <div class="button-group">
+      <button [attr.data-testid]="testIds.BUTTON_PRIMARY" class="btn btn-primary">Primary Button</button>
+      <button [attr.data-testid]="testIds.BUTTON_SECONDARY" class="btn btn-secondary">Secondary Button</button>
+      <button [attr.data-testid]="testIds.BUTTON_DISABLED" class="btn btn-primary" disabled>Disabled Button</button>
+      <button [attr.data-testid]="testIds.BUTTON_ICON" class="btn btn-icon">🔍</button>
+    </div>
+  </section>
+
+  <!-- Display Elements -->
+  <section class="display-section card">
+    <h2>Display Elements</h2>
+    <a [attr.data-testid]="testIds.LINK" href="#" class="link">This is a link</a>
+    <div class="image-container">
+      <img [attr.data-testid]="testIds.IMAGE" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='100'%3E%3Crect fill='%23ddd' width='200' height='100'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%23666'%3ETest Image%3C/text%3E%3C/svg%3E" alt="Test Image" />
+    </div>
+    <div [attr.data-testid]="testIds.ICON" class="icon">⭐</div>
+  </section>
+
+  <!-- Lists -->
+  <section class="lists-section card">
+    <h2>Lists</h2>
+    <div class="lists-container">
+      <div>
+        <h3>Unordered List</h3>
+        <ul [attr.data-testid]="testIds.LIST_UNORDERED">
+          <li [attr.data-testid]="testIds.LIST_ITEM_1">{{ unorderedItems[0] }}</li>
+          <li [attr.data-testid]="testIds.LIST_ITEM_2">{{ unorderedItems[1] }}</li>
+          <li [attr.data-testid]="testIds.LIST_ITEM_3">{{ unorderedItems[2] }}</li>
+          <li [attr.data-testid]="testIds.LIST_ITEM_4">{{ unorderedItems[3] }}</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Ordered List</h3>
+        <ol [attr.data-testid]="testIds.LIST_ORDERED">
+          <li>{{ orderedItems[0] }}</li>
+          <li>{{ orderedItems[1] }}</li>
+          <li>{{ orderedItems[2] }}</li>
+          <li>{{ orderedItems[3] }}</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Angular-Specific Features -->
+  <section class="angular-section card">
+    <h2>Angular-Specific Features</h2>
+    
+    <div class="conditional">
+      <h3>*ngIf Directive</h3>
+      <button (click)="toggleConditional()" class="btn btn-secondary">Toggle Element</button>
+      <div *ngIf="showConditional" [attr.data-testid]="testIds.CONDITIONAL_ELEMENT" class="conditional-content">
+        This element is conditionally rendered with *ngIf
+      </div>
+    </div>
+
+    <div class="ngfor">
+      <h3>*ngFor Directive</h3>
+      <ul [attr.data-testid]="testIds.NGFOR_LIST">
+        <li *ngFor="let item of ngForItems; let i = index" [attr.data-testid]="'ngfor-item-' + (i + 1)">
+          {{ item }}
+        </li>
+      </ul>
+    </div>
+
+    <div class="pipes">
+      <h3>Pipes</h3>
+      <div [attr.data-testid]="testIds.PIPED_VALUE">
+        <p><strong>Date:</strong> {{ todayDate | date:'fullDate' }}</p>
+        <p><strong>Number:</strong> {{ largeNumber | number:'1.2-2' }}</p>
+        <p><strong>Currency:</strong> {{ largeNumber | currency }}</p>
+        <p><strong>Uppercase:</strong> {{ uppercaseText | uppercase }}</p>
+      </div>
+    </div>
+
+    <div [attr.data-testid]="testIds.CUSTOM_COMPONENT" class="custom-component">
+      <h3>Custom Component</h3>
+      <p>This is a custom component section</p>
+    </div>
+  </section>
+
+  <!-- Modal -->
+  <section class="modal-section card">
+    <h2>Modal/Dialog</h2>
+    <button [attr.data-testid]="testIds.MODAL_TRIGGER" (click)="openModal()" class="btn btn-primary">
+      Open Modal
+    </button>
+
+    <div *ngIf="showModal" class="modal-overlay" (click)="closeModal()">
+      <div [attr.data-testid]="testIds.MODAL_CONTENT" class="modal-content" (click)="$event.stopPropagation()">
+        <h3>Modal Title</h3>
+        <p>This is the modal content. Click outside or press the close button to dismiss.</p>
+        <button [attr.data-testid]="testIds.MODAL_CLOSE" (click)="closeModal()" class="btn btn-secondary">
+          Close Modal
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Accordion -->
+  <section class="accordion-section card">
+    <h2>Accordion/Expansion Panels</h2>
+    
+    <div class="accordion">
+      <div [attr.data-testid]="testIds.ACCORDION_1" class="accordion-item">
+        <button class="accordion-header" (click)="toggleAccordion('1')">
+          <span>Accordion Item 1</span>
+          <span class="accordion-icon">{{ accordionOpen['1'] ? '−' : '+' }}</span>
+        </button>
+        <div *ngIf="accordionOpen['1']" class="accordion-content">
+          Content for accordion item 1
+        </div>
+      </div>
+
+      <div [attr.data-testid]="testIds.ACCORDION_2" class="accordion-item">
+        <button class="accordion-header" (click)="toggleAccordion('2')">
+          <span>Accordion Item 2</span>
+          <span class="accordion-icon">{{ accordionOpen['2'] ? '−' : '+' }}</span>
+        </button>
+        <div *ngIf="accordionOpen['2']" class="accordion-content">
+          Content for accordion item 2
+        </div>
+      </div>
+
+      <div [attr.data-testid]="testIds.ACCORDION_3" class="accordion-item">
+        <button class="accordion-header" (click)="toggleAccordion('3')">
+          <span>Accordion Item 3</span>
+          <span class="accordion-icon">{{ accordionOpen['3'] ? '−' : '+' }}</span>
+        </button>
+        <div *ngIf="accordionOpen['3']" class="accordion-content">
+          Content for accordion item 3
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tabs -->
+  <section class="tabs-section card">
+    <h2>Tabs</h2>
+    <div class="tabs">
+      <div class="tab-headers">
+        <button
+          [attr.data-testid]="testIds.TAB_1"
+          (click)="selectTab(0)"
+          [class.active]="activeTab === 0"
+          class="tab-header"
+        >
+          Tab 1
+        </button>
+        <button
+          [attr.data-testid]="testIds.TAB_2"
+          (click)="selectTab(1)"
+          [class.active]="activeTab === 1"
+          class="tab-header"
+        >
+          Tab 2
+        </button>
+        <button
+          [attr.data-testid]="testIds.TAB_3"
+          (click)="selectTab(2)"
+          [class.active]="activeTab === 2"
+          class="tab-header"
+        >
+          Tab 3
+        </button>
+      </div>
+
+      <div class="tab-panels">
+        <div *ngIf="activeTab === 0" [attr.data-testid]="testIds.TAB_PANEL_1" class="tab-panel">
+          Content for Tab 1
+        </div>
+        <div *ngIf="activeTab === 1" [attr.data-testid]="testIds.TAB_PANEL_2" class="tab-panel">
+          Content for Tab 2
+        </div>
+        <div *ngIf="activeTab === 2" [attr.data-testid]="testIds.TAB_PANEL_3" class="tab-panel">
+          Content for Tab 3
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Table -->
+  <section class="table-section card">
+    <h2>Table</h2>
+    <table [attr.data-testid]="testIds.TABLE" class="data-table">
+      <thead>
+        <tr>
+          <th [attr.data-testid]="testIds.TABLE_HEADER_ID">ID</th>
+          <th [attr.data-testid]="testIds.TABLE_HEADER_NAME">Name</th>
+          <th [attr.data-testid]="testIds.TABLE_HEADER_EMAIL">Email</th>
+          <th [attr.data-testid]="testIds.TABLE_HEADER_ROLE">Role</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of tableData; let i = index" [attr.data-testid]="'table-row-' + (i + 1)">
+          <td [attr.data-testid]="'table-cell-' + (i + 1) + '-1'">{{ row.id }}</td>
+          <td [attr.data-testid]="'table-cell-' + (i + 1) + '-2'">{{ row.name }}</td>
+          <td [attr.data-testid]="'table-cell-' + (i + 1) + '-3'">{{ row.email }}</td>
+          <td [attr.data-testid]="'table-cell-' + (i + 1) + '-4'">{{ row.role }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Tooltip -->
+  <section class="tooltip-section card">
+    <h2>Tooltip</h2>
+    <div class="tooltip-container">
+      <span [attr.data-testid]="testIds.TOOLTIP_TRIGGER" class="tooltip-trigger" title="This is a tooltip!">
+        Hover over me
+      </span>
+    </div>
+  </section>
+</div>

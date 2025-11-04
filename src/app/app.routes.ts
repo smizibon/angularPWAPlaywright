@@ -16,5 +16,10 @@ export const routes: Routes = [
     title: 'Page 3',
     loadComponent: () => import('./pages/page-three/page-three.component').then(m => m.PageThreeComponent),
   },
+  {
+    path: 'test-playground',
+    title: 'Test Playground',
+    loadComponent: () => import('./pages/test-playground/test-playground.component').then(m => m.TestPlaygroundComponent),
+  },
   { path: '**', redirectTo: '' }
 ];

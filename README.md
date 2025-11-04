@@ -69,6 +69,8 @@ npx playwright test tests/click-through.spec.ts
 
 --------------
 
+kill -9 $(lsof -ti:4200)
+
 Step 1: Start only the Angular dev server:
 ng serve
 Step 2: In another terminal, run the test:
