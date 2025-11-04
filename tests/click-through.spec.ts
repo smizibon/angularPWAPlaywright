@@ -9,8 +9,14 @@ test.describe('Electron build: click-through by data-testid', () => {
     if (testInfo.project.name !== 'chromium') {
       test.skip(true, 'Electron test runs only under chromium project');
     }
-    // Launch Electron against the compiled main process.
-    const electronApp = await electron.launch({ args: ['./dist-electron/main.js'] });
+    // Launch Electron against the compiled main process with dev server URL
+    const electronApp = await electron.launch({ 
+      args: ['./dist-electron/main.js'],
+      env: {
+        ...process.env,
+        ANGULAR_DEV_SERVER_URL: 'http://localhost:4200'
+      }
+    });
 
     try {
       const page = await electronApp.firstWindow();

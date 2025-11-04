@@ -57,3 +57,20 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+
+---------
+running tests 
+
+npm run build && npm run build:electron
+
+# Run the Electron test
+npx playwright test tests/click-through.spec.ts
+
+--------------
+
+Step 1: Start only the Angular dev server:
+ng serve
+Step 2: In another terminal, run the test:
+npx playwright test tests/click-through.spec.ts
+----------------
