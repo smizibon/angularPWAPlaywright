@@ -1,0 +1,84 @@
+{
+  "name": "demo-chat-app",
+  "version": "0.0.0",
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "electron:build": "tsc -p tsconfig.electron.json",
+    "electron:dev": "npm run electron:build && ANGULAR_DEV_SERVER_URL=http://localhost:4200 electron ./dist-electron/main.js",
+    "electron:wait": "wait-on http://localhost:4200 && npm run electron:dev",
+    "start:electron": "concurrently -k \"ng serve\" \"npm:electron:wait\"",
+    "build:electron": "npm run build && npm run electron:build",
+    "desktop:prod": "npm run build:electron && electron ./dist-electron/main.js",
+    "pack": "npm run build && npm run electron:build && electron-builder --dir",
+    "dist": "npm run build && npm run electron:build && electron-builder",
+    "icons:generate": "mkdir -p build/icon.iconset && sips -z 16 16 public/icons/icon-512x512.png --out build/icon.iconset/icon_16x16.png && sips -z 32 32 public/icons/icon-512x512.png --out build/icon.iconset/icon_16x16@2x.png && sips -z 32 32 public/icons/icon-512x512.png --out build/icon.iconset/icon_32x32.png && sips -z 64 64 public/icons/icon-512x512.png --out build/icon.iconset/icon_32x32@2x.png && sips -z 128 128 public/icons/icon-512x512.png --out build/icon.iconset/icon_128x128.png && sips -z 256 256 public/icons/icon-512x512.png --out build/icon.iconset/icon_128x128@2x.png && sips -z 256 256 public/icons/icon-512x512.png --out build/icon.iconset/icon_256x256.png && sips -z 512 512 public/icons/icon-512x512.png --out build/icon.iconset/icon_256x256@2x.png && sips -z 512 512 public/icons/icon-512x512.png --out build/icon.iconset/icon_512x512.png && sips -z 1024 1024 public/icons/icon-512x512.png --out build/icon.iconset/icon_512x512@2x.png && iconutil -c icns build/icon.iconset -o build/icon.icns"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "overrides": [
+      {
+        "files": "*.html",
+        "options": {
+          "parser": "angular"
+        }
+      }
+    ]
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/common": "^20.3.0",
+    "@angular/compiler": "^20.3.0",
+    "@angular/core": "^20.3.0",
+    "@angular/forms": "^20.3.0",
+    "@angular/platform-browser": "^20.3.0",
+    "@angular/router": "^20.3.0",
+    "@angular/service-worker": "^20.3.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^20.3.8",
+    "@angular/cli": "^20.3.8",
+    "@angular/compiler-cli": "^20.3.0",
+    "@playwright/test": "^1.56.1",
+    "@types/jasmine": "~5.1.0",
+    "@types/node": "^24.10.0",
+    "concurrently": "^9.2.1",
+    "electron": "^31.7.7",
+    "electron-builder": "^24.13.3",
+    "jasmine-core": "~5.9.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "typescript": "~5.9.2",
+    "wait-on": "^7.2.0"
+  },
+  "build": {
+    "appId": "com.demo.chat.app",
+    "productName": "Demo Chat App",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist-electron/**/*",
+      "dist/demo-chat-app/browser/**/*",
+      "package.json"
+    ],
+    "mac": {
+      "icon": "build/icon.icns",
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    }
+  }
+}
